@@ -1,0 +1,7 @@
+MessageID: 0022771AREY
+Message Hash: 00:2:AREGOOD
+Recipient Phone: +27712345677
+Message: are you good 
+Flag: are you good 
+
+---

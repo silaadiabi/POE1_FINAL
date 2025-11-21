@@ -1,29 +1,31 @@
 package com.example;
 
+/**
+ * Represents a message with unique identifier, hash, and metadata
+ */
 public class Message {
     private final String messageID;
     private final int messageNumber;
     private final String recipientPhoneNumber;
     private final String content;
     private final String messageHash;
+    private final String flag;
 
-    public Message(int messageNumber, String recipientPhoneNumber, String content) {
+    public Message(int messageNumber, String recipientPhoneNumber, String content, String flag) {
         this.messageNumber = messageNumber;
         this.recipientPhoneNumber = recipientPhoneNumber;
         this.content = content;
+        this.flag = flag;
         this.messageID = generateMessageID();
         this.messageHash = createMessageHash();
     }
 
     private String generateMessageID() {
-        // Fixed: Using string manipulation and loop counter instead of Random
         StringBuilder idBuilder = new StringBuilder();
         
-        // Use message number as base (padded to 3 digits)
         String paddedNumber = String.format("%03d", messageNumber);
         idBuilder.append(paddedNumber);
         
-        // Add characters from phone number using loop
         if (recipientPhoneNumber != null && !recipientPhoneNumber.isEmpty()) {
             int phoneCharsToTake = Math.min(5, recipientPhoneNumber.length());
             for (int i = 0; i < phoneCharsToTake; i++) {
@@ -34,7 +36,6 @@ public class Message {
             }
         }
         
-        // Add characters from content using loop counter
         if (content != null && !content.isEmpty()) {
             int contentCharsToTake = Math.min(4, content.length());
             int charsAdded = 0;
@@ -46,7 +47,6 @@ public class Message {
                 }
             }
             
-            // If we need more characters, pad with numbers
             while (charsAdded < contentCharsToTake) {
                 idBuilder.append(charsAdded);
                 charsAdded++;
@@ -61,7 +61,6 @@ public class Message {
         String firstWord = words.length > 0 ? words[0] : "";
         String lastWord = words.length > 1 ? words[words.length - 1] : firstWord;
         
-        // Use first 2 characters of message ID
         String prefix = messageID.length() >= 2 ? messageID.substring(0, 2) : "00";
         
         return (prefix + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
@@ -72,12 +71,14 @@ public class Message {
     public String getRecipientPhoneNumber() { return recipientPhoneNumber; }
     public String getMessageText() { return content; }
     public String getMessageHash() { return messageHash; }
+    public String getFlag() { return flag; }
 
     @Override
     public String toString() {
         return "MessageID: " + messageID + "\n"
                 + "Message Hash: " + messageHash + "\n"
                 + "Recipient Phone: " + recipientPhoneNumber + "\n"
-                + "Message: " + content + "\n";
+                + "Message: " + content + "\n"
+                + "Flag: " + flag + "\n";
     }
 }

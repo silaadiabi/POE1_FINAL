@@ -1,0 +1,51 @@
+[
+  {
+    "message": "Did you get the cake?",
+    "recipient": "+27834557896",
+    "hash": "00:1:DIDCAKE?",
+    "id": "0012783DIDY",
+    "flag": "Sent"
+  },
+  {
+    "message": "Where are you? You are late! I have asked you to be on time.",
+    "recipient": "+27838884567",
+    "hash": "00:2:WHERETIME.",
+    "id": "0022783WHER",
+    "flag": "Stored"
+  },
+  {
+    "message": "Yohoooo, I am at your gate.",
+    "recipient": "+27834484567",
+    "hash": "00:3:YOHOOOO,GATE.",
+    "id": "0032783YOHO",
+    "flag": "Disregard"
+  },
+  {
+    "message": "It is dinner time!",
+    "recipient": "0838884567",
+    "hash": "00:4:ITTIME!",
+    "id": "00408388ITIS",
+    "flag": "Sent"
+  },
+  {
+    "message": "Ok, I am leaving without you.",
+    "recipient": "+27838884567",
+    "hash": "00:5:OK,YOU.",
+    "id": "0052783OKIA",
+    "flag": "Stored"
+  },
+  {
+    "message": "hello",
+    "recipient": "+27676603760",
+    "hash": "00:6:HELLOHELLO",
+    "id": "0062767HELL",
+    "flag": "hello"
+  },
+  {
+    "message": "hi",
+    "recipient": "+27785794892",
+    "hash": "00:7:HIHI",
+    "id": "0072778HI",
+    "flag": "hi"
+  }
+]

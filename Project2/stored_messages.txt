@@ -1,0 +1,14 @@
+MessageID: 0062767HELL
+Message Hash: 00:6:HELLOHELLO
+Recipient Phone: +27676603760
+Message: hello
+Flag: hello
+
+---
+MessageID: 0072778HI
+Message Hash: 00:7:HIHI
+Recipient Phone: +27785794892
+Message: hi
+Flag: hi
+
+---

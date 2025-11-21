@@ -1,81 +1,56 @@
 package com.example;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login {
-    private String registeredUsername;
-    private String registeredPassword;
-    private String registeredPhone;
-
-    public boolean checkUserName(String username) {
-        if (username == null) return false;
-        return username.contains("_") && username.length() <= 5;
+    private final Map<String, User> users = new HashMap<>();
+    
+    private static class User {
+        String username;
+        String password;
+        String phone;
+        
+        User(String username, String password, String phone) {
+            this.username = username;
+            this.password = password;
+            this.phone = phone;
+        }
     }
-
-    public boolean checkPasswordComplexity(String password) {
-        if (password == null || password.length() < 8) return false;
-
-        boolean hasUpper = false;
-        boolean hasNum = false;
-        boolean hasSpecial = false;
-
-        for (char c : password.toCharArray()) {
-            if (Character.isUpperCase(c)) hasUpper = true;
-            if (Character.isDigit(c)) hasNum = true;
-            if (!Character.isLetterOrDigit(c)) hasSpecial = true;
+    
+    public String registerUser(String username, String password, String phone) {
+        if (username == null || username.trim().isEmpty()) {
+            return "Username cannot be empty.";
         }
-        return hasUpper && hasNum && hasSpecial;
-    }
-
-    public boolean checkCellPhoneNumber(String phone) {
-        if (phone == null) return false;
-        String regex = "^\\+27\\d{9}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(phone);
-        return matcher.matches();
-    }
-
-    public String registerUser(String username, String password, String phoneNumber) {
-        String errorMessage = "";
-
-        if (!checkUserName(username)) {
-            errorMessage += "Username incorrectly formatted. It must contain an underscore and be no more than 5 characters long.\n";
+        if (password == null || password.trim().isEmpty()) {
+            return "Password cannot be empty.";
         }
-
-        if (!checkPasswordComplexity(password)) {
-            errorMessage += "Password incorrectly formatted. It must have at least 8 characters, a capital letter, a number, and a special character.\n";
+        if (phone == null || !phone.matches("^\\+27\\d{9}$")) {
+            return "Invalid phone number. Must be in +27 format with 9 following digits.";
         }
-
-        if (!checkCellPhoneNumber(phoneNumber)) {
-            errorMessage += "Cell phone number incorrectly formatted. Must include +27 and 9 digits.\n";
+        if (users.containsKey(username)) {
+            return "Username already exists.";
         }
-
-        if (!errorMessage.isEmpty()) {
-            return errorMessage.trim();
-        }
-
-        registeredUsername = username;
-        registeredPassword = password;
-        registeredPhone = phoneNumber;
-
+        
+        users.put(username, new User(username, password, phone));
         return "User registered successfully.";
     }
-
+    
     public boolean loginUser(String username, String password) {
-        return registeredUsername != null &&
-                registeredUsername.equals(username) &&
-                registeredPassword != null &&
-                registeredPassword.equals(password);
+        User user = users.get(username);
+        return user != null && user.password.equals(password);
     }
-
+    
     public String returnLoginStatus(String username, String password) {
         if (loginUser(username, password)) {
-            String[] parts = username.split("_", 2);
-            String firstName = parts.length > 0 ? parts[0] : "User";
-            String lastName = parts.length > 1 ? parts[1] : "";
-            return "Welcome " + firstName + " " + lastName + ", it is great to see you again.";
+            return "Login successful! Welcome, " + username + ".";
+        } else {
+            return "Login failed. Invalid username or password.";
         }
-        return "Username or password incorrect, please try again.";
+    }
+    
+    public String getPhoneForUser(String username) {
+        User user = users.get(username);
+        return user != null ? user.phone : null;
     }
 }
